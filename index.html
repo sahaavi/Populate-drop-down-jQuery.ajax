@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax Task</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("select.division").change(function() {
+          var selectedDivision = $(".division option:selected").val();
+          $.ajax({
+            type: "POST",
+            url: "process-request.php",
+            data: { division: selectedDivision }
+          }).done(function(data) {
+            $("#response").html(data);
+          });
+        });
+      });
+    </script>
+
+    <style type="text/css">
+      .states label {
+        display: inline-block;
+        width: 8%; /* rounding error */
+        margin: 10;
+        padding: 0;
+        position: static;
+      }
+    </style>
+  </head>
+  <body>
+    <fieldset align="center">
+      <legend>
+        Populate district dropdown based on option selected in division dropdown
+        using AJAX
+      </legend>
+      <div class="states">
+        <form>
+          <label for="division">Division</label>
+          <select id="div" class="division">
+            <option value="" disabled selected>---Select---</option>
+            <option value="Barisal">Barisal</option>
+            <option value="Chattogram">Chattogram</option>
+            <option value="Dhaka">Dhaka</option>
+            <option value="Khulna">Khulna</option>
+            <option value="Mymensingh">Mymensingh</option>
+            <option value="Rajshahi">Rajshahi</option>
+            <option value="Rangpur">Rangpur</option>
+            <option value="Sylhet">Sylhet</option>
+          </select>
+          <br /><br />
+          <label>District</label>
+          <select class="district" id="response" required>
+            <option value="" disabled selected>---Select---</option>
+          </select>
+          <br />
+          <br />
+          <button
+            type="button"
+            style="background-color: aquamarine;"
+            onclick="myFunction()"
+          >
+            Submit
+          </button>
+        </form>
+        <br />
+      </div>
+      <div>
+        <p>Division -> <span id="txtHint"></span></p>
+        <p>
+          District ->
+          <span id="txtHint1"></span>
+        </p>
+      </div>
+    </fieldset>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("div").value;
+        document.getElementById("txtHint").innerHTML = x;
+        var y = document.getElementById("response").value;
+        document.getElementById("txtHint1").innerHTML = y;
+      }
+    </script>
+  </body>
+</html>
